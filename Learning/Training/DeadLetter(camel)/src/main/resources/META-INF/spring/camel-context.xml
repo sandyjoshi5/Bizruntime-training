@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+<bean id="bean1" class="com.bizruntime.DeadLetter.Test1"/>
+  <bean id="bean2" class="com.bizruntime.DeadLetter.Test2"/>
+  <bean id="bean3" class="com.bizruntime.DeadLetter.Test3"/>
+  
+  <camelContext xmlns="http://camel.apache.org/schema/spring">    
+    <route>
+        <from uri="file:src/data2?noop=true"/>
+        <multicast parallelProcessing="true">
+        <bean ref="bean1"/>
+        <bean ref="bean2"/>
+        <bean ref="bean3"/>
+        </multicast>
+    </route>
+  </camelContext>
+
+</beans>

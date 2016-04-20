@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+    	<from uri = "file:src/data" />
+    	<log message = "Transferring data from file to seda.." />
+    	<to uri = "seda:temp" />
+    </route>
+    <!--  staged event-driven architecture -->
+    <route>
+    	<from uri = "seda:temp" />
+    	<log message = "Transferring data from seda to file" />
+    	<to uri = "file:target/seda" />
+    </route>
+  </camelContext>
+
+</beans>

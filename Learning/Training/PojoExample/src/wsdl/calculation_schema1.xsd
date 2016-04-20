@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:tns="http://cxf.bizruntime.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://cxf.bizruntime.com/" version="1.0">
+<xs:element name="addition" type="tns:addition"/>
+<xs:element name="additionResponse" type="tns:additionResponse"/>
+<xs:complexType name="addition">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element name="arg1" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="additionResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

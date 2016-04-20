@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:soap="http://cxf.apache.org/bindings/soap"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       ">
+
+	<bean id = "clientProcessor" class = "com.bizruntime.camel.ClientProcessor" />
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+
+		<route>
+			<from uri="cxf:bean:serviceEndpoint" />
+			<to uri = "clientProcessor" />
+		</route>
+
+	</camelContext>
+
+	<cxf:cxfEndpoint id="serviceEndpoint"
+		address="http://localhost:8080/DemoCxf/services/CalculationPort"
+		wsdlURL="/home/bizruntime12/workspace/PojoExample/src/wsdl/calculation.wsdl"
+		serviceClass="com.bizruntime.cxf.Calculation" endpointName="CalculationPort"
+		serviceName="CalculationService" xmlns="http://cxf.bizruntime.com/" />
+
+
+</beans>

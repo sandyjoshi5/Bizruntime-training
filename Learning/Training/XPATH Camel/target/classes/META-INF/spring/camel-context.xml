@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd	
+	 http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+	  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+
+		<camel:endpoint id="xmlFile" uri="file://data/xml-folder" />
+
+
+		<camel:route>
+			<camel:from ref="xmlFile"></camel:from>
+			<camel:choice>
+			
+				<camel:when>
+					<camel:xpath>//profession/name= 'Doctor'</camel:xpath>
+					<camel:process ref="doctorProcessor"></camel:process>
+				</camel:when>			
+				<camel:when>
+					<camel:xpath>//profession/name= 'lawyer'</camel:xpath>
+				    <camel:process ref="lawyerProcessor"></camel:process>
+				</camel:when>	
+				<camel:otherwise>
+					<camel:process ref="engProcessor"></camel:process>
+				</camel:otherwise>
+			</camel:choice>
+			<!-- <camel:process ref="doctorProcessor"></camel:process> -->
+		</camel:route>
+	</camelContext>
+
+	<bean id="doctorProcessor" class="com.bizruntime.xpath.DoctorProcessor"></bean>
+	 <bean id="lawyerProcessor" class="com.bizruntime.xpath.EngProcessor"></bean>
+	<bean id="engProcessor" class="com.bizruntime.xpath.LawyerProcessor"></bean>  
+
+</beans>

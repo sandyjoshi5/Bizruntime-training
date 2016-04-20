@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://camel.apache.org/schema/cxf
+		http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+
+	<cxf:cxfEndpoint id="customer-ws" address="http://localhost:9093/SOAPOverHttp"
+		endpointName="SOAPOverHttp" serviceName="CustomerServiceService"
+		serviceClass="bizruntime.com.wsdl.customerservice.CustomerService"
+		xmlns="http://com.bizruntime/wsdl/CustomerService"
+		wsdlURL="src/main/wsdl/CustomerService.wsdl"/>
+		
+		  <import resource="classpath:META-INF/cxf/cxf.xml" />   
+   
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+
+		<route>
+			<from uri="cxf:bean:customer-ws" />
+			<log message="${headers}"/>
+			<choice>
+				<when>
+					<simple>${in.headers.operationName} == 'updateCustomer'</simple>
+					<to uri="updateCustomer" />
+				</when>
+				<when>
+					<simple>${in.headers.operationName} == 'lookupCustomer'</simple>
+					<to uri="lookupCustomer" />
+				</when>
+				<when>
+					<simple>${in.headers.operationName} == 'getCustomerStatus'</simple>
+					<to uri="getCustomerStatus" />
+				</when>
+			</choice>
+		</route>
+	</camelContext>
+
+	  <bean id="updateCustomer"
+		class="bizruntime.com.wsdl.customerservice.UpdateCustomerProcessor" /> 
+	<bean id="lookupCustomer"
+		class="bizruntime.com.wsdl.customerservice.LookupCustomerProcessor" />
+	<bean id="getCustomerStatus"
+		class="bizruntime.com.wsdl.customerservice.GetCustomerStatusProcessor" />
+
+</beans>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+<bean id="bean1" class="com.biz.CamelExample.Test2" />
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <!-- here is a sample which processes the input files
+         (leaving them in place - see the 'noop' flag)
+         then performs content based routing on the message using XPath -->
+    <route>
+      <from uri="file:src/data2?noop=true" />
+			<doTry>
+				<process ref="bean1" />
+				<to uri="file:target/correctMessage" />
+				<doCatch>
+					<exception>java.lang.NumberFormatException</exception>
+					<handled> <constant>true</constant> </handled>
+					<!-- <onWhen>
+						<simple>${body} contains 'HELLO SANDEEP'</simple>
+					</onWhen> -->
+					<to uri="file:target/catchBlock" />
+				</doCatch>
+				<doFinally>
+					<to uri="file:target/finallyBlock" />
+				</doFinally>
+			</doTry>
+    </route>
+  </camelContext>
+
+</beans>

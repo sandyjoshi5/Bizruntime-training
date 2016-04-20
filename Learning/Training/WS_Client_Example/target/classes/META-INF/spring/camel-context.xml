@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:jaxws="http://cxf.apache.org/jaxws"
+xmlns:soap="http://cxf.apache.org/bindings/soap"
+xmlns:cxf="http://camel.apache.org/schema/cxf"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/bindings/soap
+http://cxf.apache.org/schemas/configuration/soap.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+<import resource="classpath:META-INF/cxf/cxf.xml" />	
+
+	<bean id="customerServiceClient" class="com.fusesource.customer.client.ClientInvoker"
+		init-method="init" destroy-method="destroy">
+		<property name="customerService" value="customerServiceProxy"></property>
+	</bean>
+
+	<jaxws:client id="customerServiceProxy" address="http://localhost:8080/cxf/Customer"
+		serviceClass="com.bizruntime.wsdl.customerservice.CustomerService" />
+</beans> 

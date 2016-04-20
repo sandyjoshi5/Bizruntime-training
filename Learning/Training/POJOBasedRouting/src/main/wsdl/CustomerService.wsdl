@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CustomerServiceService" targetNamespace="http://com.bizruntime/wsdl/CustomerService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://com.bizruntime/wsdl/CustomerService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:tns="http://com.bizruntime/wsdl/CustomerService" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://com.bizruntime/wsdl/CustomerService" version="1.0">
+
+  <xs:element name="getCustomerStatus" type="tns:getCustomerStatus"/>
+
+  <xs:element name="getCustomerStatusResponse" type="tns:getCustomerStatusResponse"/>
+
+  <xs:element name="lookupCustomer" type="tns:lookupCustomer"/>
+
+  <xs:element name="lookupCustomerResponse" type="tns:lookupCustomerResponse"/>
+
+  <xs:element name="updateCustomer" type="tns:updateCustomer"/>
+
+  <xs:element name="updateCustomerResponse" type="tns:updateCustomerResponse"/>
+
+  <xs:complexType name="updateCustomer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="customer" type="tns:customer"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="customer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+      <xs:element minOccurs="0" name="phone" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateCustomerResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getCustomerStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="customerId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCustomerStatusResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="status" type="tns:holder"/>
+      <xs:element minOccurs="0" name="statusMessage" type="tns:holder"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType final="extension restriction" name="holder">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="value" type="xs:anyType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="lookupCustomer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="customerId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="lookupCustomerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:customer"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getCustomerStatusResponse">
+    <wsdl:part name="parameters" element="tns:getCustomerStatusResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomer">
+    <wsdl:part name="parameters" element="tns:updateCustomer">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="lookupCustomerResponse">
+    <wsdl:part name="parameters" element="tns:lookupCustomerResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="lookupCustomer">
+    <wsdl:part name="parameters" element="tns:lookupCustomer">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerStatus">
+    <wsdl:part name="parameters" element="tns:getCustomerStatus">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomerResponse">
+    <wsdl:part name="parameters" element="tns:updateCustomerResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CustomerService">
+    <wsdl:operation name="updateCustomer">
+      <wsdl:input name="updateCustomer" message="tns:updateCustomer">
+    </wsdl:input>
+      <wsdl:output name="updateCustomerResponse" message="tns:updateCustomerResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerStatus">
+      <wsdl:input name="getCustomerStatus" message="tns:getCustomerStatus">
+    </wsdl:input>
+      <wsdl:output name="getCustomerStatusResponse" message="tns:getCustomerStatusResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lookupCustomer">
+      <wsdl:input name="lookupCustomer" message="tns:lookupCustomer">
+    </wsdl:input>
+      <wsdl:output name="lookupCustomerResponse" message="tns:lookupCustomerResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CustomerServiceServiceSoapBinding" type="tns:CustomerService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="updateCustomer">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateCustomer">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateCustomerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerStatus">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCustomerStatus">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCustomerStatusResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lookupCustomer">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="lookupCustomer">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="lookupCustomerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CustomerServiceService">
+    <wsdl:port name="SOAPOverHttp" binding="tns:CustomerServiceServiceSoapBinding">
+      <soap:address location="http://localhost:9090/SOAPOverHttp"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
